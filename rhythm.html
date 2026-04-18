@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FingT | Rhythm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="BG_video.mp4" type="video/mp4">
+  </video>
+  <div class="app-wrapper">
+    <header class="app-header">
+      <div class="logo">
+        <img src="Fing_T_Logo.png" alt="FingT Logo" class="logo-img">
+      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="piano.html" class="nav-link">Piano</a>
+        <a href="flute.html" class="nav-link">Flute</a>
+        <a href="advanced.html" class="nav-link">Advanced</a>
+        <a href="rhythm.html" class="nav-link active">Rhythm</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="trainer-container">
+      <h1 class="mode-title">🥁 Rhythm Mode | Predefined Songs | Build Your Beat</h1>
+
+      <!-- Song Selector & Sequence Info -->
+      <section class="rhythm-selector card">
+        <label for="songSelect">Choose a song:</label>
+        <select id="songSelect" class="song-select">
+          <option value="jingle">Jingle Bells</option>
+          <option value="happy">Happy Birthday</option>
+        </select>
+        <button id="loadSongBtn" class="btn-secondary">Load Sequence</button>
+        <p class="hint">Sequence will be loaded automatically — you can still edit before starting</p>
+      </section>
+
+      <!-- Sequence Builder Area -->
+      <section class="sequence-section card">
+        <div class="section-header">
+          <h2>Your Sequence</h2>
+          <div class="sequence-actions">
+            <button id="clearSeqBtn" class="btn-secondary" aria-label="Clear sequence">Clear</button>
+            <button id="removeLastBtn" class="btn-secondary" aria-label="Remove last">↩️</button>
+          </div>
+        </div>
+        <div id="sequenceDisplay" class="sequence-display">
+          <!-- Sequence chips dynamically inserted -->
+        </div>
+        <p class="hint">Use keys 1–4 to build or follow the loaded sequence</p>
+      </section>
+
+      <!-- Keypad (4 keys for rhythm mode) -->
+      <section class="keypad-section">
+        <div id="keypadContainer" class="keypad-grid">
+          <!-- Populated with 4 keys -->
+        </div>
+      </section>
+
+      <!-- Visual Timing Indicator (simple pulse) -->
+      <section class="timing-indicator card">
+        <div class="timing-header">
+          <span>⏳ Timing Guide</span>
+          <span id="timingNote" class="timing-note"></span>
+        </div>
+        <div id="timingBarContainer" class="timing-bar-container">
+          <div id="timingBar" class="timing-bar"></div>
+        </div>
+      </section>
+
+      <!-- Training Controls & Timer -->
+      <section class="training-panel card">
+        <div class="timer-area">
+          <span class="timer-label">⏱️</span>
+          <span id="timerDisplay" class="timer-value">00.0 s</span>
+        </div>
+        <div class="progress-container">
+          <div id="progressBar" class="progress-bar" style="width: 0%;"></div>
+        </div>
+        <div class="control-group">
+          <button id="startBtn" class="btn-primary">▶ Start</button>
+          <button id="resetBtn" class="btn-secondary">↻ Reset</button>
+        </div>
+        <div id="stateMessage" class="state-message"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Made for musicians | Idea By Krushna</span>
+    </footer>
+  </div>
+
+  <!-- Modal Popup -->
+  <div id="popupModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <p id="popupMessage"></p>
+      <button id="popupCloseBtn" class="btn-primary">OK</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof FingT !== 'undefined') {
+        // Predefined sequences (key indices 0-3 for 4 keys)
+        const predefinedSequences = {
+          jingle: [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3], // Simplified Jingle Bells
+          happy: [0, 0, 1, 0, 2, 1, 0, 0, 1, 0, 3, 2]  // Happy Birthday
+        };
+
+        FingT.init({
+          mode: 'rhythm',
+          keyCount: 4,
+          soundType: null,   // Could add rhythm sounds later
+          predefined: predefinedSequences,
+          enableTimingVisual: true
+        });
+      } else {
+        console.error('FingT core not loaded');
+      }
+    });
+  </script>
+</body>
+</html>

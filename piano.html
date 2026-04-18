@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FingT | Piano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="BG_video.mp4" type="video/mp4">
+  </video>
+  <div class="app-wrapper">
+    <header class="app-header">
+      <div class="logo">
+        <img src="Fing_T_Logo.png" alt="FingT Logo" class="logo-img">
+      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="piano.html" class="nav-link active">Piano</a>
+        <a href="flute.html" class="nav-link">Flute</a>
+        <a href="advanced.html" class="nav-link">Advanced</a>
+        <a href="rhythm.html" class="nav-link">Rhythm</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </header>
+
+    <!-- Mobile Device Warning Alert -->
+    <div id="mobileWarningAlert" class="mobile-warning-alert" style="display: none;">
+      <div class="alert-content">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-message">Better to use this mode on DESKTOP for best experience</span>
+        <button id="closeAlertBtn" class="alert-close" aria-label="Close alert">&times;</button>
+      </div>
+    </div>
+
+    <main class="trainer-container">
+      <h1 class="mode-title">🎹 Piano Mode | Multi-Octave | With Keyboard Mapping</h1>
+
+      <!-- Piano Keyboard Section -->
+      <section class="piano-section card">
+        <div class="section-header">
+          <h2>Piano Keyboard</h2>
+        </div>
+        <div class="piano-wrapper" id="pianoWrapper">
+          <!-- Multi-octave keyboard injected by JS -->
+        </div>
+        <p class="hint">🎹 Click keys to add notes to sequence | Keyboard mapping active</p>
+      </section>
+
+      <!-- Keyboard Mapping Display -->
+      <section class="piano-mapping-section card">
+        <div class="section-header">
+          <h2>⌨️ Keyboard Mapping</h2>
+        </div>
+        <div id="pianoMappingTable" class="piano-mapping-grid"></div>
+      </section>
+
+      <!-- Piano Configuration -->
+      <section class="piano-config-section card">
+        <div class="section-header">
+          <h2>🎹 Configure Piano Keys</h2>
+        </div>
+        <p class="hint">Click any note button and press any keyboard key to reassign</p>
+        <div id="pianoConfigBtns" class="piano-config-buttons"></div>
+        <button id="resetPianoMappingBtn" class="btn-secondary" style="margin-top: 1rem;">🔄 Reset to Default</button>
+      </section>
+
+      <!-- Keyboard Layout Guide -->
+      <section class="piano-guide-section card">
+        <div class="section-header">
+          <h2>⌨️ Quick Keyboard Guide</h2>
+        </div>
+        <div class="keyboard-layout-guide">
+          <div class="layout-group">
+            <h3>Lower Octave (C4-B4)</h3>
+            <div class="layout-row">
+              <div class="key-label primary">Z</div>
+              <div class="key-label primary">X</div>
+              <div class="key-label primary">C</div>
+              <div class="key-label primary">V</div>
+              <div class="key-label primary">B</div>
+              <div class="key-label primary">N</div>
+              <div class="key-label primary">M</div>
+            </div>
+            <div class="layout-notes">C4 • D4 • E4 • F4 • G4 • A4 • B4</div>
+            <div class="layout-row" style="margin-top: 1.5rem;">
+              <div class="key-label secondary">1</div>
+              <div class="key-label secondary">2</div>
+              <div class="key-label secondary">3</div>
+              <div class="key-label secondary">4</div>
+              <div class="key-label secondary">5</div>
+            </div>
+            <div class="layout-notes">C#4 • D#4 • F#4 • G#4 • A#4 (Sharps)</div>
+          </div>
+
+          <div class="layout-group">
+            <h3>Higher Octave (C5-B5)</h3>
+            <div class="layout-row">
+              <div class="key-label primary">Q</div>
+              <div class="key-label primary">W</div>
+              <div class="key-label primary">E</div>
+              <div class="key-label primary">R</div>
+              <div class="key-label primary">T</div>
+              <div class="key-label primary">Y</div>
+              <div class="key-label primary">U</div>
+            </div>
+            <div class="layout-notes">C5 • D5 • E5 • F5 • G5 • A5 • B5</div>
+            <div class="layout-row" style="margin-top: 1.5rem;">
+              <div class="key-label secondary">6</div>
+              <div class="key-label secondary">7</div>
+              <div class="key-label secondary">8</div>
+              <div class="key-label secondary">9</div>
+              <div class="key-label secondary">0</div>
+            </div>
+            <div class="layout-notes">C#5 • D#5 • F#5 • G#5 • A#5 (Sharps)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sequence Builder Area -->
+      <section class="sequence-section card">
+        <div class="section-header">
+          <h2>Your Sequence</h2>
+          <div class="sequence-actions">
+            <button id="clearSeqBtn" class="btn-secondary" aria-label="Clear sequence">Clear</button>
+            <button id="removeLastBtn" class="btn-secondary" aria-label="Remove last">↩️</button>
+          </div>
+        </div>
+        <div id="sequenceDisplay" class="sequence-display">
+          <!-- Sequence chips dynamically inserted -->
+        </div>
+        <p class="hint">Click keys to build your sequence — piano sound will play</p>
+      </section>
+
+      <!-- Training Controls & Timer -->
+      <section class="training-panel card">
+        <div class="section-header">
+          <h2>🎯 Training Controls</h2>
+        </div>
+        <div class="timer-area">
+          <span class="timer-label">⏱️ Time:</span>
+          <span id="timerDisplay" class="timer-value">00.0 s</span>
+        </div>
+        <div class="progress-container">
+          <div id="progressBar" class="progress-bar" style="width: 0%;"></div>
+        </div>
+        <div class="control-group">
+          <button id="startBtn" class="btn-primary">▶ Start Training</button>
+          <button id="resetBtn" class="btn-secondary">↻ Reset</button>
+        </div>
+        <div id="stateMessage" class="state-message"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Made for musicians | Idea By Krushna</span>
+    </footer>
+  </div>
+
+  <!-- Modal Popup -->
+  <div id="popupModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <p id="popupMessage"></p>
+      <button id="popupCloseBtn" class="btn-primary">OK</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="piano-extended.js"></script>
+  <script>
+    // Mobile Device Detection and Warning Alert
+    function detectDevice() {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const mobileKeywords = ['mobile', 'android', 'iphone', 'ipad', 'windows phone', 'blackberry', 'tablet', 'kindle'];
+      return mobileKeywords.some(keyword => userAgent.includes(keyword));
+    }
+
+    function showMobileWarningAlert() {
+      const isMobile = detectDevice();
+      if (isMobile) {
+        const alertElement = document.getElementById('mobileWarningAlert');
+        const closeBtn = document.getElementById('closeAlertBtn');
+        
+        if (alertElement) {
+          alertElement.style.display = 'block';
+          
+          // Auto-dismiss after 5 seconds
+          const timeoutId = setTimeout(() => {
+            alertElement.classList.add('fade-out');
+            setTimeout(() => {
+              alertElement.style.display = 'none';
+              alertElement.classList.remove('fade-out');
+            }, 400);
+          }, 5000);
+          
+          // Manual close button
+          if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+              clearTimeout(timeoutId);
+              alertElement.classList.add('fade-out');
+              setTimeout(() => {
+                alertElement.style.display = 'none';
+                alertElement.classList.remove('fade-out');
+              }, 400);
+            });
+          }
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Show mobile warning alert
+      showMobileWarningAlert();
+      
+      if (typeof FingT !== 'undefined') {
+        FingT.init({
+          mode: 'piano',
+          keyCount: 24,  // 24 piano notes (C4-B5)
+          soundType: 'piano',
+          predefined: null
+        });
+        
+        // Initialize piano extended features
+        if (typeof PianoExtended !== 'undefined') {
+          await PianoExtended.init();
+        }
+      } else {
+        console.error('FingT core not loaded');
+      }
+      
+      // Reset button for piano mapping
+      const resetBtn = document.getElementById('resetPianoMappingBtn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (typeof PianoExtended !== 'undefined') {
+            PianoExtended.resetPianoMapping();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FingT | Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="BG_video.mp4" type="video/mp4">
+  </video>
+  <div class="app-wrapper">
+    <header class="app-header">
+      <div class="logo">
+        <img src="Fing_T_Logo.png" alt="FingT Logo" class="logo-img">
+      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="piano.html" class="nav-link">Piano</a>
+        <a href="flute.html" class="nav-link">Flute</a>
+        <a href="advanced.html" class="nav-link">Advanced</a>
+        <a href="rhythm.html" class="nav-link">Rhythm</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="trainer-container">
+      <h1 class="mode-title">🎵 Home | 4 Keys | Train Muscle Memory </h1>
+
+      <!-- Sequence Builder Area -->
+      <section class="sequence-section card">
+        <div class="section-header">
+          <h2>Your Sequence</h2>
+          <div class="sequence-actions">
+            <button id="clearSeqBtn" class="btn-secondary" aria-label="Clear sequence">Clear</button>
+            <button id="removeLastBtn" class="btn-secondary" aria-label="Remove last">↩️</button>
+          </div>
+        </div>
+        <div id="sequenceDisplay" class="sequence-display">
+          <!-- Sequence chips will appear here -->
+        </div>
+        <p class="hint">Click keys below to build your sequence</p>
+      </section>
+
+      <!-- Keypad -->
+      <section class="keypad-section">
+        <div id="keypadContainer" class="keypad-grid">
+          <!-- Dynamically populated with 4 keys -->
+        </div>
+      </section>
+
+      <!-- Training Controls & Timer -->
+      <section class="training-panel card">
+        <div class="timer-area">
+          <span class="timer-label">⏱️</span>
+          <span id="timerDisplay" class="timer-value">00.0 s</span>
+        </div>
+        <div class="progress-container">
+          <div id="progressBar" class="progress-bar" style="width: 0%;"></div>
+        </div>
+        <div class="control-group">
+          <button id="startBtn" class="btn-primary">▶ Start</button>
+          <button id="resetBtn" class="btn-secondary">↻ Reset</button>
+        </div>
+        <div id="stateMessage" class="state-message"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Made for musicians | Idea By Krushna</span>
+    </footer>
+  </div>
+
+  <!-- Onboarding Overlay (hidden by default) -->
+  <div id="onboardingOverlay" class="onboarding-overlay" style="display: none;">
+    <div class="onboarding-container">
+      <!-- Progress Indicator -->
+      <div class="onboarding-progress">
+        <div class="progress-dots">
+          <div class="progress-dot active" data-step="1"></div>
+          <div class="progress-dot" data-step="2"></div>
+          <div class="progress-dot" data-step="3"></div>
+          <div class="progress-dot" data-step="4"></div>
+        </div>
+      </div>
+
+      <!-- Step 1: Welcome -->
+      <div class="onboarding-step" id="onb-step-1">
+        <div class="onboarding-content">
+          <div class="onboarding-icon">🎵</div>
+          <h2 class="onboarding-title">Start Your Journey with FingT</h2>
+          <p class="onboarding-description">
+            Welcome to FingT, your personal finger training companion. Let's get you started in just a few steps.
+          </p>
+          <div class="onboarding-features">
+            <div class="feature-item">✓ Train finger muscle memory</div>
+            <div class="feature-item">✓ Multiple training modes</div>
+            <div class="feature-item">✓ Custom keyboard mapping</div>
+            <div class="feature-item">✓ Real-time progress tracking</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Device Selection -->
+      <div class="onboarding-step" id="onb-step-2" style="display: none;">
+        <div class="onboarding-content">
+          <div class="onboarding-icon">📱</div>
+          <h2 class="onboarding-title">Which device are you using?</h2>
+          <p class="onboarding-description">
+            We'll customize the guide based on your device type.
+          </p>
+          <div class="device-selector">
+            <button class="device-option" id="device-desktop" data-device="desktop">
+              <div class="device-icon">💻</div>
+              <div class="device-name">Desktop / Laptop</div>
+              <div class="device-hint">Keyboard input</div>
+            </button>
+            <button class="device-option" id="device-mobile" data-device="mobile">
+              <div class="device-icon">📲</div>
+              <div class="device-name">Mobile Phone</div>
+              <div class="device-hint">Touch input</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Video Guide -->
+      <div class="onboarding-step" id="onb-step-3" style="display: none;">
+        <div class="onboarding-content">
+          <div class="onboarding-icon">🎬</div>
+          <h2 class="onboarding-title">Quick Setup Guide</h2>
+          <p class="onboarding-description">
+            Watch this short guide to get started.
+          </p>
+          <div class="video-container">
+            <video id="onb-video" controls playsinline style="width: 100%; max-width: 400px; border-radius: 16px; background: #000;">
+              <source src="video/desktop.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+          <p class="video-hint">Video will be customized based on your device</p>
+        </div>
+      </div>
+
+      <!-- Step 4: Ready -->
+      <div class="onboarding-step" id="onb-step-4" style="display: none;">
+        <div class="onboarding-content">
+          <div class="onboarding-icon">🎉</div>
+          <h2 class="onboarding-title">You're All Set!</h2>
+          <p class="onboarding-description">
+            Everything is ready. Let's start training and improve your finger muscle memory.
+          </p>
+          <div class="ready-checklist">
+            <div class="checklist-item">✓ Device detected and configured</div>
+            <div class="checklist-item">✓ Video guide watched</div>
+            <div class="checklist-item">✓ Ready to train</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="onboarding-controls">
+        <button id="onb-back-btn" class="btn-secondary onb-btn-nav" style="display: none;">← Back</button>
+        <button id="onb-next-btn" class="btn-primary onb-btn-nav">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Popup (hidden by default) -->
+  <div id="popupModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <p id="popupMessage"></p>
+      <button id="popupCloseBtn" class="btn-primary">OK</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="onboarding.js"></script>
+  <script>
+    // Page-specific initialization: Home mode (4 keys, no special sound)
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize onboarding first (shows only on first visit)
+      if (typeof Onboarding !== 'undefined') {
+        Onboarding.init();
+      }
+      
+      if (typeof FingT !== 'undefined') {
+        FingT.init({
+          mode: 'home',
+          keyCount: 4,
+          soundType: null,        // no sound in home mode
+          predefined: null
+        });
+      } else {
+        console.error('FingT core not loaded');
+      }
+    });
+  </script>
+</body>
+</html>

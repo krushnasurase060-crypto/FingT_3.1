@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FingT | Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="BG_video.mp4" type="video/mp4">
+  </video>
+  <div class="app-wrapper">
+    <header class="app-header">
+      <div class="logo">
+        <img src="Fing_T_Logo.png" alt="FingT Logo" class="logo-img">
+      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="piano.html" class="nav-link">Piano</a>
+        <a href="flute.html" class="nav-link">Flute</a>
+        <a href="advanced.html" class="nav-link">Advanced</a>
+        <a href="rhythm.html" class="nav-link">Rhythm</a>
+        <a href="settings.html" class="nav-link active">Settings</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+      <button id="userManualBtn" class="btn-user-manual" title="View User Manual">
+        <span class="manual-icon">📖</span>
+        <span class="manual-text">Manual</span>
+      </button>
+    </header>
+
+    <main class="settings-container">
+      <h1 class="mode-title">⚙️ Keyboard Mappings</h1>
+
+      <section class="settings-card card">
+        <p class="settings-description">
+          Assign keyboard keys to each button. Press a key while focused on the input field.
+        </p>
+
+        <div id="mappingsList" class="mappings-list">
+          <!-- Dynamically populated based on key count from localStorage -->
+        </div>
+
+        <div class="settings-actions">
+          <button id="saveMappingsBtn" class="btn-primary">💾 Save Mappings</button>
+          <button id="resetDefaultsBtn" class="btn-secondary">↻ Reset to Defaults</button>
+        </div>
+
+        <div id="settingsMessage" class="settings-message"></div>
+      </section>
+
+      <section class="info-card card">
+        <h2>Current Default Keys</h2>
+        <p><strong>Keys 1–4:</strong> 1, 2, 3, 4</p>
+        <p><strong>Keys 5–10 (Advanced):</strong> 5, 6, 7, 8, 9, 0</p>
+        <p class="hint">Mappings are shared across all modes and saved in your browser.</p>
+      </section>
+
+      <!-- Piano Key Mapping Section -->
+      <section class="settings-card card">
+        <h2>🎹 Piano Keyboard Mapping</h2>
+        <p class="settings-description">
+          Configure keyboard shortcuts for piano notes (C4-B5). Click a note button and press any keyboard key to assign.
+        </p>
+
+        <!-- Keyboard Layout Guide -->
+        <div class="keyboard-layout-guide" style="margin-bottom: 2rem;">
+          <div class="layout-group">
+            <h3>Lower Octave (C4-B4)</h3>
+            <div class="layout-row">
+              <div class="key-label primary">Z</div>
+              <div class="key-label primary">X</div>
+              <div class="key-label primary">C</div>
+              <div class="key-label primary">V</div>
+              <div class="key-label primary">B</div>
+              <div class="key-label primary">N</div>
+              <div class="key-label primary">M</div>
+            </div>
+            <div class="layout-notes">C4 • D4 • E4 • F4 • G4 • A4 • B4</div>
+            <div class="layout-row" style="margin-top: 1rem;">
+              <div class="key-label secondary">1</div>
+              <div class="key-label secondary">2</div>
+              <div class="key-label secondary">3</div>
+              <div class="key-label secondary">4</div>
+              <div class="key-label secondary">5</div>
+            </div>
+            <div class="layout-notes">C#4 • D#4 • F#4 • G#4 • A#4</div>
+          </div>
+
+          <div class="layout-group">
+            <h3>Higher Octave (C5-B5)</h3>
+            <div class="layout-row">
+              <div class="key-label primary">Q</div>
+              <div class="key-label primary">W</div>
+              <div class="key-label primary">E</div>
+              <div class="key-label primary">R</div>
+              <div class="key-label primary">T</div>
+              <div class="key-label primary">Y</div>
+              <div class="key-label primary">U</div>
+            </div>
+            <div class="layout-notes">C5 • D5 • E5 • F5 • G5 • A5 • B5</div>
+            <div class="layout-row" style="margin-top: 1rem;">
+              <div class="key-label secondary">6</div>
+              <div class="key-label secondary">7</div>
+              <div class="key-label secondary">8</div>
+              <div class="key-label secondary">9</div>
+              <div class="key-label secondary">0</div>
+            </div>
+            <div class="layout-notes">C#5 • D#5 • F#5 • G#5 • A#5</div>
+          </div>
+        </div>
+
+        <div class="piano-settings-content">
+          <div id="pianomappingTable" class="piano-mapping-grid" style="margin-top: 1.5rem;"></div>
+          
+          <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(230, 213, 184, 0.2); border-radius: 15px; border: 1px solid var(--accent-soft);">
+            <h3 style="margin-bottom: 1rem; color: var(--text-primary);">⌨️ Configure Piano Keys</h3>
+            <p class="hint" style="margin-bottom: 1.5rem;">Click any note button below and press any keyboard key to reassign it.</p>
+            <div id="pianoConfigBtnsSettings" class="piano-config-buttons"></div>
+          </div>
+
+          <div class="settings-actions" style="margin-top: 1.5rem;">
+            <button id="savePianoMappingsBtn" class="btn-primary">💾 Save Piano Mapping</button>
+            <button id="resetPianoMappingsBtn" class="btn-secondary">↻ Reset Piano to Defaults</button>
+          </div>
+
+          <div id="pianoSettingsMessage" class="settings-message"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Made for musicians | Idea By Krushna</span>
+    </footer>
+  </div>
+
+  <!-- Onboarding Overlay (hidden by default) -->
+  <div id="onboardingOverlay" class="onboarding-overlay" style="display: none;">
+    <div class="onboarding-container">
+      <!-- Progress Indicator -->
+      <div class="onboarding-progress">
+        <div class="progress-dots">
+          <div class="progress-dot active" data-step="1"></div>
+          <div class="progress-dot" data-step="2"></div>
+          <div class="progress-dot" data-step="3"></div>
+          <div class="progress-dot" data-step="4"></div>
+        </div>
+      </div>
+
+      <!-- Step 1: Welcome -->
+      <div class="onboarding-step" id="onb-step-1">
+        <div class="onboarding-content">
+          <div class="onboarding-icon">🎵</div>
+          <h2 class="onboarding-title">Start Your Journey with FingT</h2>
+          <p class="onboarding-description">
+            Welcome to FingT, your personal finger training companion. Let's get you started in just a few steps.
+          </p>
+          <div class="onboarding-features">
+            <div class="feature-item">✓ Train finger muscle memory</div>
+            <div class="feature-item">✓ Multiple training modes</div>
+            <div class="feature-item">✓ Custom keyboard mapping</div>
+            <div class="feature-item">✓ Real-time progress tracking</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Device Selection -->
+      <div class="onboarding-step" id="onb-step-2" style="display: none;">
+        <div class="onboarding-content">
+          <div class="onboarding-icon">📱</div>
+          <h2 class="onboarding-title">Which device are you using?</h2>
+          <p class="onboarding-description">
+            We'll customize the guide based on your device type.
+          </p>
+          <div class="device-selector">
+            <button class="device-option" id="device-desktop" data-device="desktop">
+              <div class="device-icon">💻</div>
+              <div class="device-name">Desktop / Laptop</div>
+              <div class="device-hint">Keyboard input</div>
+            </button>
+            <button class="device-option" id="device-mobile" data-device="mobile">
+              <div class="device-icon">📲</div>
+              <div class="device-name">Mobile Phone</div>
+              <div class="device-hint">Touch input</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Video Guide -->
+      <div class="onboarding-step" id="onb-step-3" style="display: none;">
+        <div class="onboarding-content">
+          <div class="onboarding-icon">🎬</div>
+          <h2 class="onboarding-title">Quick Setup Guide</h2>
+          <p class="onboarding-description">
+            Watch this short guide to get started.
+          </p>
+          <div class="video-container">
+            <video id="onb-video" controls playsinline style="width: 100%; max-width: 400px; border-radius: 16px; background: #000;">
+              <source src="video/desktop.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+          <p class="video-hint">Video will be customized based on your device</p>
+        </div>
+      </div>
+
+      <!-- Step 4: Ready -->
+      <div class="onboarding-step" id="onb-step-4" style="display: none;">
+        <div class="onboarding-content">
+          <div class="onboarding-icon">🎉</div>
+          <h2 class="onboarding-title">You're All Set!</h2>
+          <p class="onboarding-description">
+            Everything is ready. Let's start training and improve your finger muscle memory.
+          </p>
+          <div class="ready-checklist">
+            <div class="checklist-item">✓ Device detected and configured</div>
+            <div class="checklist-item">✓ Video guide watched</div>
+            <div class="checklist-item">✓ Ready to train</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="onboarding-controls">
+        <button id="onb-back-btn" class="btn-secondary onb-btn-nav" style="display: none;">← Back</button>
+        <button id="onb-next-btn" class="btn-primary onb-btn-nav">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Popup (hidden by default) -->
+  <div id="popupModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <p id="popupMessage"></p>
+      <button id="popupCloseBtn" class="btn-primary">OK</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="onboarding.js"></script>
+  <script src="piano-extended.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof FingT !== 'undefined' && FingT.initSettings) {
+        FingT.initSettings();
+      } else {
+        console.error('FingT settings module not loaded');
+      }
+      
+      // Initialize Piano Settings
+      if (typeof PianoExtended !== 'undefined') {
+        // Load piano key mapping for display
+        const state = PianoExtended.getState();
+        renderPianoSettingsUI(state.pianoKeyMapping);
+        renderPianoConfigButtons();
+        
+        // Piano mapping display update
+        function renderPianoSettingsUI(mapping) {
+          const table = document.getElementById('pianomappingTable');
+          if (!table) return;
+          table.innerHTML = '';
+          Object.entries(mapping).forEach(([keyCode, note]) => {
+            const card = document.createElement('div');
+            card.className = 'piano-mapping-card';
+            card.innerHTML = `<strong>${keyCode.replace("Key", "")}</strong> → ${note.replace(/[0-9]/g, '')}`;
+            table.appendChild(card);
+          });
+        }
+        
+        // Piano config buttons for settings page
+        function renderPianoConfigButtons() {
+          const container = document.getElementById('pianoConfigBtnsSettings');
+          if (!container) return;
+          container.innerHTML = '';
+          
+          const state = PianoExtended.getState();
+          const config = PianoExtended.getConfig();
+          const uniqueNotes = [...new Set(Object.values(state.pianoKeyMapping))];
+          uniqueNotes.sort();
+          
+          uniqueNotes.forEach(note => {
+            const btn = document.createElement('button');
+            btn.className = 'piano-config-btn';
+            btn.textContent = note.replace(/[0-9]/g, '');
+            btn.dataset.settingsConfigNote = note;
+            btn.addEventListener('click', () => startSettingsPianoConfig(note, btn));
+            container.appendChild(btn);
+          });
+        }
+        
+        // Configuration mode for settings page
+        let configuringNote = null;
+        function startSettingsPianoConfig(note, btn) {
+          configuringNote = note;
+          btn.style.border = '3px solid #ffff00';
+          btn.style.animation = 'pulse 0.6s infinite';
+          document.getElementById('pianoSettingsMessage').textContent = `Press any key for ${note.replace(/[0-9]/g, '')}...`;
+        }
+        
+        // Capture key press for settings
+        document.addEventListener('keydown', (e) => {
+          if (configuringNote !== null) {
+            e.preventDefault();
+            const state = PianoExtended.getState();
+            const oldMapping = state.pianoKeyMapping;
+            
+            // Remove old mapping for this note
+            for (let code in oldMapping) {
+              if (oldMapping[code] === configuringNote) {
+                delete oldMapping[code];
+              }
+            }
+            
+            // Add new mapping
+            oldMapping[e.code] = configuringNote;
+            state.pianoKeyMapping = oldMapping;
+            localStorage.setItem('fingt_pianomap', JSON.stringify(oldMapping));
+            
+            // Reset UI
+            const buttons = document.querySelectorAll('[data-settings-config-note]');
+            buttons.forEach(btn => {
+              btn.style.border = '';
+              btn.style.animation = '';
+            });
+            
+            renderPianoSettingsUI(oldMapping);
+            renderPianoConfigButtons();
+            document.getElementById('pianoSettingsMessage').textContent = `✅ ${configuringNote.replace(/[0-9]/g, '')} → ${e.code.replace("Key", "")}`;
+            configuringNote = null;
+          }
+        });
+        
+        // Piano settings buttons
+        const savePianoBtn = document.getElementById('savePianoMappingsBtn');
+        if (savePianoBtn) {
+          savePianoBtn.addEventListener('click', () => {
+            document.getElementById('pianoSettingsMessage').textContent = '✅ Piano mappings saved!';
+            setTimeout(() => {
+              document.getElementById('pianoSettingsMessage').textContent = '';
+            }, 2000);
+          });
+        }
+        
+        const resetPianoBtn = document.getElementById('resetPianoMappingsBtn');
+        if (resetPianoBtn) {
+          resetPianoBtn.addEventListener('click', () => {
+            if (confirm('Reset piano keyboard mapping to defaults?')) {
+              PianoExtended.resetPianoMapping();
+              const state = PianoExtended.getState();
+              renderPianoSettingsUI(state.pianoKeyMapping);
+              renderPianoConfigButtons();
+              document.getElementById('pianoSettingsMessage').textContent = '✅ Piano mapping reset to defaults!';
+            }
+          });
+        }
+      }
+    });
+  </script>
+
+  <!-- User Manual Button Event Listener -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const userManualBtn = document.getElementById('userManualBtn');
+      if (userManualBtn && typeof Onboarding !== 'undefined') {
+        userManualBtn.addEventListener('click', () => {
+          Onboarding.showManual();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
